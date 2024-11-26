@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video</title>
+    <link rel="stylesheet" href="vidoe.css" />
+  </head>
+  <body>
+    <div class="navbar">YouTube Clone</div>
+    <div class="container">
+      <!-- Sidebar for video list -->
+      <div class="sidebar">
+        <ul>
+          <li data-video="gb1p1.mp4">Gangbang Episode 1 Part - 1</li>
+          <li data-video="gb2p1.mp4">Gangbang Episode 1 Part - 2</li>
+          <li data-video="gb3p1.mp4">Gangbang Episode 1 Part - 3</li>
+          <li data-video="gb4p1.mp4">Gangbang Episode 1 Part - 4</li>
+          <li data-video="gb5p2.mp4">Gangbang Episode 2 Part - 1</li>
+          <li data-video="gb6p2.mp4">Gangbang Episode 2 Part - 2</li>
+          <li data-video="Rod at ass.mp4">Rod at Ass</li>
+          <li data-video="boobs showing.mp4">Boobs Showing</li>
+          <li data-video="caught.mp4">Caught Red Handed</li>
+        </ul>
+      </div>
+
+      <!-- Video player -->
+      <div class="video-player">
+        <video controls autoplay>
+          <source id="videoSource" src="" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+
+    <script>
+      // Get video URL from query params
+      const urlParams = new URLSearchParams(window.location.search);
+      const videoSrc = urlParams.get("video");
+
+      // Set the video source
+      const videoElement = document.getElementById("videoSource");
+      const videoPlayer = document.querySelector("video");
+      if (videoSrc) {
+        videoElement.src = videoSrc;
+        videoPlayer.load();
+        highlightPlayingVideo(videoSrc);
+      } else {
+        alert("No video selected!");
+      }
+
+      // Highlight the currently playing video
+      function highlightPlayingVideo(src) {
+        document.querySelectorAll(".sidebar ul li").forEach((item) => {
+          item.classList.remove("playing");
+          if (item.getAttribute("data-video") === src) {
+            item.classList.add("playing");
+          }
+        });
+      }
+
+      // Add click event to sidebar items
+      document.querySelectorAll(".sidebar ul li").forEach((item) => {
+        item.addEventListener("click", () => {
+          const newVideoSrc = item.getAttribute("data-video");
+          videoElement.src = newVideoSrc;
+          videoPlayer.load();
+          highlightPlayingVideo(newVideoSrc);
+        });
+      });
+    </script>
+  </body>
+</html>
